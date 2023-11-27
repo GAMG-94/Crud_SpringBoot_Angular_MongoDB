@@ -4,6 +4,8 @@ package com.crud.spring_angular_mongo.crud.controller;
 import com.crud.spring_angular_mongo.crud.dto.ProductDto;
 import com.crud.spring_angular_mongo.crud.entity.Product;
 import com.crud.spring_angular_mongo.crud.service.ProductService;
+import com.crud.spring_angular_mongo.global.exceptions.AttributeException;
+import com.crud.spring_angular_mongo.global.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,25 +27,25 @@ public class ProductController {
 
     // Listando por Id
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable("id") Integer id) {
+    public ResponseEntity<Product> getProduct(@PathVariable("id") Integer id) throws ResourceNotFoundException {
         return ResponseEntity.ok(productService.getProduct(id));
     }
 
     // Guardando un Producto
     @PostMapping
-    public ResponseEntity<Product> saveProduct(@RequestBody ProductDto dto) {
+    public ResponseEntity<Product> saveProduct(@RequestBody ProductDto dto) throws AttributeException {
         return ResponseEntity.ok(productService.saveProduct(dto));
     }
 
     // Actualizando un Producto
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable("id") Integer id, @RequestBody ProductDto dto) {
+    public ResponseEntity<Product> updateProduct(@PathVariable("id") Integer id, @RequestBody ProductDto dto) throws ResourceNotFoundException, AttributeException {
         return ResponseEntity.ok(productService.updateProduct(id, dto));
     }
 
     // Eliminar Producto
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable("id") Integer id) {
+    public ResponseEntity<Product> deleteProduct(@PathVariable("id") Integer id) throws ResourceNotFoundException {
         return ResponseEntity.ok(productService.deleteProduct(id));
     }
 
