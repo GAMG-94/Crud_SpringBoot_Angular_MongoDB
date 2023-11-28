@@ -4,9 +4,12 @@ package com.crud.spring_angular_mongo.crud.controller;
 import com.crud.spring_angular_mongo.crud.dto.ProductDto;
 import com.crud.spring_angular_mongo.crud.entity.Product;
 import com.crud.spring_angular_mongo.crud.service.ProductService;
+import com.crud.spring_angular_mongo.global.dto.MessageDto;
 import com.crud.spring_angular_mongo.global.exceptions.AttributeException;
 import com.crud.spring_angular_mongo.global.exceptions.ResourceNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,20 +36,26 @@ public class ProductController {
 
     // Guardando un Producto
     @PostMapping
-    public ResponseEntity<Product> saveProduct(@RequestBody ProductDto dto) throws AttributeException {
-        return ResponseEntity.ok(productService.saveProduct(dto));
+    public ResponseEntity<MessageDto> saveProduct(@Valid @RequestBody ProductDto dto) throws AttributeException {
+        Product product = productService.saveProduct(dto);
+        String message = "Product " + product.getName() + " has been saved";
+        return ResponseEntity.ok(new MessageDto(HttpStatus.OK, message));
     }
 
     // Actualizando un Producto
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable("id") Integer id, @RequestBody ProductDto dto) throws ResourceNotFoundException, AttributeException {
-        return ResponseEntity.ok(productService.updateProduct(id, dto));
+    public ResponseEntity<MessageDto> updateProduct(@PathVariable("id") Integer id, @Valid @RequestBody ProductDto dto) throws ResourceNotFoundException, AttributeException {
+        Product product = productService.updateProduct(id, dto);
+        String message = "Product " + product.getName() + " has been updated";
+        return ResponseEntity.ok(new MessageDto(HttpStatus.OK, message));
     }
 
     // Eliminar Producto
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable("id") Integer id) throws ResourceNotFoundException {
-        return ResponseEntity.ok(productService.deleteProduct(id));
+    public ResponseEntity<MessageDto> deleteProduct(@PathVariable("id") Integer id) throws ResourceNotFoundException {
+        Product product = productService.deleteProduct(id);
+        String message = "Product " + product.getName() + " has been deleted";
+        return ResponseEntity.ok(new MessageDto(HttpStatus.OK, message));
     }
 
 }
