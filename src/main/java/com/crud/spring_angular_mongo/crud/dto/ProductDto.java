@@ -1,8 +1,14 @@
 package com.crud.spring_angular_mongo.crud.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 public class ProductDto {
 
+    @NotBlank(message = "Product name is mandatory")
     private String name;
+
+    @Min(value = 1, message = "Product price is mandatory")
     private Long price;
 
     public ProductDto() {
