@@ -1,6 +1,5 @@
 package com.crud.spring_angular_mongo.crud.controller;
 
-
 import com.crud.spring_angular_mongo.crud.dto.ProductDto;
 import com.crud.spring_angular_mongo.crud.entity.Product;
 import com.crud.spring_angular_mongo.crud.service.ProductService;
@@ -17,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/product")
+@CrossOrigin
 public class ProductController {
 
     @Autowired
@@ -57,5 +57,4 @@ public class ProductController {
         String message = "Product " + product.getName() + " has been deleted";
         return ResponseEntity.ok(new MessageDto(HttpStatus.OK, message));
     }
-
 }
