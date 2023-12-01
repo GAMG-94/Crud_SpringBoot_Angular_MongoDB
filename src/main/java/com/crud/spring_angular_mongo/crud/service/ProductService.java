@@ -27,7 +27,7 @@ public class ProductService {
         return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not Found"));
     }
 
-    // Obteniendo solo el Id
+    // Guardando el Producto
     public Product saveProduct(ProductDto dto) throws AttributeException {
         if (productRepository.existsByName(dto.getName()))
             throw new AttributeException("Name already in use");
